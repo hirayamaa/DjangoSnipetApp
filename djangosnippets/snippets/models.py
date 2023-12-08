@@ -9,8 +9,8 @@ class Snippet(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
                                    verbose_name='投稿者',
                                    on_delete=models.CASCADE)
-    created_at = models.DateField('投稿日', auto_now_add=True)
-    updated_at = models.DateField('更新日', auto_now=True)
+    created_at = models.DateTimeField('投稿日', auto_now_add=True)
+    updated_at = models.DateTimeField('更新日', auto_now=True)
 
     def __str__(self):
         return self.title
