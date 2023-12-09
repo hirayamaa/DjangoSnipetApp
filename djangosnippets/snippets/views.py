@@ -3,7 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
 from snippets.models import Snippet
+from snippets.models import Comment
 from snippets.forms import SnippetForm
+from snippets.forms import CommentForm
 
 
 def top(request):
@@ -32,8 +34,10 @@ def snippet_edit(request, snippet_id):
 
 def snippet_detail(request, snippet_id):
     snippet = get_object_or_404(Snippet, pk=snippet_id)
+    comments = Comment.objects.filter(commented_to=snippet)
+    form = CommentForm()
     return render(request, 'snippets/snippet_detail.html',
-                  {'snippet': snippet})
+                  {'snippet': snippet, 'comments': comments, 'form': form})
 
 
 @login_required

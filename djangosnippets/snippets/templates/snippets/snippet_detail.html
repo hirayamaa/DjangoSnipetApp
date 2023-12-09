@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load pygmentize %}
+{% load django_bootstrap5 %}
 
 {% block extraheader %}
 <style>{% pygments_css %}</style>
@@ -18,4 +19,21 @@
   {{ snippet.code|pygmentize:"python3" }}
 </div>
   <p>{{ snippet.description }}</p>
+<div class="container border">
+  <h3>コメント一覧</h3>
+{% if comments.count > 0 %}
+  {% for comment in comments %}
+    <p>{{ comment.text }}</p>
+    <p>by {{ comment.commented_by }}さん {{ comment.commented_at }}</p>
+  {% endfor %}
+{% else %}
+   <p>まだコメントがありません</p>
+{% endif %}
+  <h3>コメントを投稿する</h3>
+  <form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_button button_type="submit" content="コメント" %}
+  </form>
+</div>
 {% endblock %}
